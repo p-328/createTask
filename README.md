@@ -1,2 +1,2 @@
 # createTask
-My APCSP create task!
+My APCSP create task! A desktop GUI application that plays hangman!
