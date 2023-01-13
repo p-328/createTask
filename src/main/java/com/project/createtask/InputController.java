@@ -49,6 +49,11 @@ public class InputController implements Initializable {
             inputText.clear();
             return 0;
         }
+        if (Objects.equals(inputText.getText(), "")) {
+            guessResult.setText("You need input a letter to guess a letter, fool!");
+            inputText.clear();
+            return 1;
+        }
         char letter = inputText.getText().toCharArray()[0];
         ArrayList<Integer> letterIndices = Words.findInstancesOfChar(wordGuess, letter);
         if (letterIndices.size() == 0) {
@@ -78,6 +83,11 @@ public class InputController implements Initializable {
             wordDisplay.setText(wordGuess);
             inputText.clear();
             return 0;
+        }
+        if (Objects.equals(inputText.getText(), "")) {
+            guessResult.setText("You need input a word to guess a word, fool!");
+            inputText.clear();
+            return 1;
         }
         String guessedWord = inputText.getText();
         if (Objects.equals(guessedWord, wordGuess)) {
