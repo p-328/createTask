@@ -1,6 +1,5 @@
 package com.project.createtask;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -25,13 +24,5 @@ public class Words {
             count++;
         }
         return instances;
-    }
-    public static boolean checkUnderscore(String text) {
-        for (var i : text.toCharArray()) {
-            if (i == '_') {
-                return true;
-            }
-        }
-        return false;
     }
 }

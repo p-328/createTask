@@ -19,5 +19,5 @@
     <TextField fx:id="inputText" />
     <Button text="Guess letter" onAction="#submitLetter" />
     <Button text="Guess word" onAction="#submitWord"/>
-    <Label fx:id="mistakeMsg" />
+    <Label fx:id="livesMsg" />
 </VBox>

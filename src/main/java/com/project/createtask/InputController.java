@@ -6,7 +6,6 @@ import javafx.scene.control.TextField;
 import javafx.fxml.Initializable;
 import java.util.ArrayList;
 
-import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -23,13 +22,12 @@ public class InputController implements Initializable {
     @FXML
     private Label wordDisplay;
     @FXML
-    private Label mistakeMsg;
-    @FXML
-    private VBox gameBox;
+    private Label livesMsg;
+    
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         wordGuess = words.get((int)(Math.random() * words.size()));
-        mistakeMsg.setText(String.format("Lives: %d", attemptsAllowed-mistakes));
+        livesMsg.setText(String.format("Lives: %d", attemptsAllowed-mistakes));
         StringBuilder initialString = new StringBuilder();
         for (int i = 0; i < wordGuess.length(); i++) {
             initialString.append("_");
@@ -43,15 +41,16 @@ public class InputController implements Initializable {
     }
     @FXML
     protected int submitLetter() {
-        if (Objects.equals(inputText.getText(), wordGuess)) {
-            guessResult.setText("You win!");
-            inputText.clear();
-            return 0;
-        }
         if (mistakes > attemptsAllowed) {
             InputController.gameOver();
             return 0;
         }
+        if (Objects.equals(wordDisplay.getText(), wordGuess)) {
+            guessResult.setText("You win!");
+            inputText.clear();
+            return 0;
+        }
+        
         if (Objects.equals(inputText.getText(), "")) {
             guessResult.setText("You need to input a letter to guess a letter, fool!");
             inputText.clear();
@@ -63,7 +62,7 @@ public class InputController implements Initializable {
             guessResult.setText(String.format("No characters found of %c", letter));
             inputText.clear();
             mistakes++;
-            mistakeMsg.setText(String.format("Lives: %d", attemptsAllowed-mistakes));
+            livesMsg.setText(String.format("Lives: %d", attemptsAllowed-mistakes));
             return 0;
         }
         guessResult.setText("Letters found!");
