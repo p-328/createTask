@@ -36,6 +36,11 @@ public class InputController implements Initializable {
         }
         wordDisplay.setText(initialString.toString());
     }
+    private static void gameOver() {
+      guessResult.setText("Game over!");
+      wordDisplay.setText(wordGuess);
+      inputText.clear();
+    }
     @FXML
     protected int submitLetter() {
         if (Objects.equals(inputText.getText(), wordGuess)) {
@@ -44,9 +49,7 @@ public class InputController implements Initializable {
             return 0;
         }
         if (mistakes > attemptsAllowed) {
-            guessResult.setText("Game over!");
-            wordDisplay.setText(wordGuess);
-            inputText.clear();
+            InputController.gameOver();
             return 0;
         }
         if (Objects.equals(inputText.getText(), "")) {
@@ -79,9 +82,7 @@ public class InputController implements Initializable {
     @FXML
     protected int submitWord() {
         if (mistakes > attemptsAllowed) {
-            guessResult.setText("Game over!");
-            wordDisplay.setText(wordGuess);
-            inputText.clear();
+            InputController.gameOver();
             return 0;
         }
         if (Objects.equals(inputText.getText(), "")) {
