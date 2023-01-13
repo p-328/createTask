@@ -50,7 +50,7 @@ public class InputController implements Initializable {
             return 0;
         }
         if (Objects.equals(inputText.getText(), "")) {
-            guessResult.setText("You need input a letter to guess a letter, fool!");
+            guessResult.setText("You need to input a letter to guess a letter, fool!");
             inputText.clear();
             return 1;
         }
@@ -85,7 +85,7 @@ public class InputController implements Initializable {
             return 0;
         }
         if (Objects.equals(inputText.getText(), "")) {
-            guessResult.setText("You need input a word to guess a word, fool!");
+            guessResult.setText("You need to input a word to guess a word, fool!");
             inputText.clear();
             return 1;
         }
