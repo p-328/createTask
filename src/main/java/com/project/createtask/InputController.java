@@ -35,6 +35,10 @@ public class InputController implements Initializable {
         }
         wordDisplay.setText(initialString.toString());
     }
+    private void winState() {
+        guessResult.setText("You win!");
+        inputText.clear();
+    }
     private void gameOver() {
       guessResult.setText("Game over!");
       wordDisplay.setText(wordGuess);
@@ -47,17 +51,24 @@ public class InputController implements Initializable {
             return 0;
         }
         if (Objects.equals(wordDisplay.getText(), wordGuess)) {
-            guessResult.setText("You win!");
-            inputText.clear();
+            winState();
             return 0;
         }
-        
         if (Objects.equals(inputText.getText(), "")) {
             guessResult.setText("You need to input a letter to guess a letter, fool!");
             inputText.clear();
             return 1;
         }
         char letter = inputText.getText().toCharArray()[0];
+        final String[] alreadyGuessed = guessedLetters.getText().split(" ");
+        if (alreadyGuessed.length == 3) {
+            if (alreadyGuessed[2].contains(""+letter)) {
+                guessResult.setText("You already guessed that letter. Try another one!");
+                inputText.clear();
+                return 1;
+            }
+        }
+
         ArrayList<Integer> letterIndices = Words.findInstancesOfChar(wordGuess, letter);
         if (letterIndices.size() == 0) {
             guessResult.setText(String.format("No characters found of %c", letter));
@@ -79,12 +90,19 @@ public class InputController implements Initializable {
         }
         wordDisplay.setText(newDisplay.toString());
         inputText.clear();
+        if (Objects.equals(wordDisplay.getText(), wordGuess)) {
+            winState();
+        }
         return 0;
     }
     @FXML
     protected int submitWord() {
         if (mistakes > attemptsAllowed) {
             gameOver();
+            return 0;
+        }
+        if (Objects.equals(wordDisplay.getText(), wordGuess)) {
+            winState();
             return 0;
         }
         if (Objects.equals(inputText.getText(), "")) {
