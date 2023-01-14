@@ -23,7 +23,8 @@ public class InputController implements Initializable {
     private Label wordDisplay;
     @FXML
     private Label livesMsg;
-    
+    @FXML
+    private Label guessedLetters;
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         wordGuess = words.get((int)(Math.random() * words.size()));
@@ -34,7 +35,7 @@ public class InputController implements Initializable {
         }
         wordDisplay.setText(initialString.toString());
     }
-    private static void gameOver() {
+    private void gameOver() {
       guessResult.setText("Game over!");
       wordDisplay.setText(wordGuess);
       inputText.clear();
@@ -42,7 +43,7 @@ public class InputController implements Initializable {
     @FXML
     protected int submitLetter() {
         if (mistakes > attemptsAllowed) {
-            InputController.gameOver();
+            gameOver();
             return 0;
         }
         if (Objects.equals(wordDisplay.getText(), wordGuess)) {
@@ -63,8 +64,10 @@ public class InputController implements Initializable {
             inputText.clear();
             mistakes++;
             livesMsg.setText(String.format("Lives: %d", attemptsAllowed-mistakes));
+            guessedLetters.setText(String.format("%s%c", guessedLetters.getText(), letter));
             return 0;
         }
+        guessedLetters.setText(String.format("%s%c", guessedLetters.getText(), letter));
         guessResult.setText("Letters found!");
         char[] displayText = wordDisplay.getText().toCharArray();
         for (var i : letterIndices) {
@@ -81,7 +84,7 @@ public class InputController implements Initializable {
     @FXML
     protected int submitWord() {
         if (mistakes > attemptsAllowed) {
-            InputController.gameOver();
+            gameOver();
             return 0;
         }
         if (Objects.equals(inputText.getText(), "")) {
@@ -98,7 +101,7 @@ public class InputController implements Initializable {
         }
         guessResult.setText("That's not the word!");
         mistakes++;
-        mistakeMsg.setText(String.format("Lives: %d", attemptsAllowed-mistakes));
+        livesMsg.setText(String.format("Lives: %d", attemptsAllowed-mistakes));
         inputText.clear();
         return 0;
     }

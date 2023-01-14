@@ -20,4 +20,5 @@
     <Button text="Guess letter" onAction="#submitLetter" />
     <Button text="Guess word" onAction="#submitWord"/>
     <Label fx:id="livesMsg" />
+    <Label fx:id="guessedLetters" text="Guessed Letters: " />
 </VBox>
