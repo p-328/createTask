@@ -1,16 +1,22 @@
 package com.project.createtask;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Words {
     public static ArrayList<String> getWords() {
         InputStream ist = Words.class.getResourceAsStream("words.txt");
         assert ist != null;
-        Scanner scanner = new Scanner(ist);
-        ArrayList<String> words = new ArrayList<>();
-        while (scanner.hasNextLine()) {
-            words.add(scanner.nextLine());
+        BufferedReader bf = new BufferedReader(new InputStreamReader(ist, StandardCharsets.UTF_8));
+        ArrayList<String> words;
+        try {
+            words = bf.lines().collect(Collectors.toCollection(ArrayList::new));
+            bf.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
         }
         return words;
     }
