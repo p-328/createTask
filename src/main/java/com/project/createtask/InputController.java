@@ -1,9 +1,12 @@
 package com.project.createtask;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.VBox;
+
 import java.util.ArrayList;
 
 import java.net.URL;
@@ -25,8 +28,11 @@ public class InputController implements Initializable {
     private Label livesMsg;
     @FXML
     private Label guessedLetters;
+    @FXML
+    private VBox gameBox;
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
+        assert words != null;
         wordGuess = words.get((int)(Math.random() * words.size()));
         livesMsg.setText(String.format("Lives: %d", attemptsAllowed-mistakes));
         StringBuilder initialString = new StringBuilder();
@@ -35,18 +41,37 @@ public class InputController implements Initializable {
         }
         wordDisplay.setText(initialString.toString());
     }
+    private void makeResetButton() {
+        Button resetBtn = new Button("Reset");
+        gameBox.getChildren().add(resetBtn);
+        resetBtn.setOnAction(actionEvent -> {
+            mistakes = 0;
+            wordGuess = words.get((int)(Math.random() * words.size()));
+            livesMsg.setText(String.format("Lives: %d", attemptsAllowed-mistakes));
+            StringBuilder initialString = new StringBuilder();
+            for (int i = 0; i < wordGuess.length(); i++) {
+                initialString.append("_");
+            }
+            wordDisplay.setText(initialString.toString());
+            guessedLetters.setText("Guessed letters: ");
+            gameBox.getChildren().remove(gameBox.getChildren().size() - 1);
+        });
+    }
     private void winState() {
         guessResult.setText("You win!");
         inputText.clear();
+        makeResetButton();
     }
     private void gameOver() {
       guessResult.setText("Game over!");
       wordDisplay.setText(wordGuess);
       inputText.clear();
+      makeResetButton();
     }
     @FXML
     protected int submitLetter() {
-        if (mistakes > attemptsAllowed) {
+
+        if (attemptsAllowed - mistakes <= 0) {
             gameOver();
             return 0;
         }
@@ -115,6 +140,7 @@ public class InputController implements Initializable {
             guessResult.setText("You win!");
             wordDisplay.setText(wordGuess);
             inputText.clear();
+            makeResetButton();
             return 0;
         }
         guessResult.setText("That's not the word!");
