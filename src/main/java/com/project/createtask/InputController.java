@@ -70,7 +70,6 @@ public class InputController implements Initializable {
     }
     @FXML
     protected int submitLetter() {
-
         if (attemptsAllowed - mistakes <= 0) {
             gameOver();
             return 0;
