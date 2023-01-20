@@ -45,12 +45,13 @@ public class InputController implements Initializable {
     /* 
       When the game is over, this method gets called, it makes a reset button, and attaches 
       an event handler to the button that initializes a completely new game state, shows the  
-      input field again and deletes the reset button 
+      input field again, clears the text of guessResult and deletes the reset button
     */
     private void makeResetButton() {
         Button resetBtn = new Button("Reset");
         gameBox.getChildren().add(resetBtn);
         resetBtn.setOnAction(actionEvent -> {
+            guessResult.setText("");
             inputText.setVisible(true);
             mistakes = 0;
             wordGuess = words.get((int)(Math.random() * words.size()));
