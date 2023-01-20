@@ -1,10 +1,12 @@
 package com.project.createtask;
-import java.io.*;
+import java.io.InputStream;
+import java.io.BufferedReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class Words {
+    // This method gets all of the potential words of the game from words.txt
     public static ArrayList<String> getWords() {
         InputStream ist = Words.class.getResourceAsStream("words.txt");
         assert ist != null;
@@ -19,6 +21,7 @@ public class Words {
         }
         return words;
     }
+    // This method finds all of the indices of ch in str, and returns all of the indices of ch. Useful in the submitLetter method in InputController.java 
     public static ArrayList<Integer> findInstancesOfChar(String str, char ch) {
         ArrayList<Integer> instances = new ArrayList<>();
         int count = 0;

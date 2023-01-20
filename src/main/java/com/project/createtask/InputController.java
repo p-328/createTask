@@ -30,6 +30,7 @@ public class InputController implements Initializable {
     private Label guessedLetters;
     @FXML
     private VBox gameBox;
+    // Code that is called when this controller is initialized, it initializes the game state of the program
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         assert words != null;
@@ -41,10 +42,16 @@ public class InputController implements Initializable {
         }
         wordDisplay.setText(initialString.toString());
     }
+    /* 
+      When the game is over, this method gets called, it makes a reset button, and attaches 
+      an event handler to the button that initializes a completely new game state, shows the  
+      input field again and deletes the reset button 
+    */
     private void makeResetButton() {
         Button resetBtn = new Button("Reset");
         gameBox.getChildren().add(resetBtn);
         resetBtn.setOnAction(actionEvent -> {
+            inputText.setVisible(true);
             mistakes = 0;
             wordGuess = words.get((int)(Math.random() * words.size()));
             livesMsg.setText(String.format("Lives: %d", attemptsAllowed-mistakes));
@@ -57,17 +64,22 @@ public class InputController implements Initializable {
             gameBox.getChildren().remove(gameBox.getChildren().size() - 1);
         });
     }
+    // This is a function that is called whenever the game is won, it makes a button to play again, hides the input field and sets the game response message to "You win!"  
     private void winState() {
         guessResult.setText("You win!");
         inputText.clear();
+        inputText.setVisible(false);
         makeResetButton();
     }
+    // This function is called whenever the player fails to guess the word, and sets the game response message to game over, reveals the actual word, and clears the current input text
     private void gameOver() {
       guessResult.setText("Game over!");
       wordDisplay.setText(wordGuess);
       inputText.clear();
+      inputText.setVisible(false);
       makeResetButton();
     }
+    // This function is a callback called when a button with the text "Guess letter" is clicked, it checks to make sure the user's lives are not less than 0, checks to see if the letters if the user already guessed are hidden
     @FXML
     protected int submitLetter() {
         if (attemptsAllowed - mistakes <= 0) {
@@ -119,6 +131,7 @@ public class InputController implements Initializable {
         }
         return 0;
     }
+    // This method is called whenever a button with the text "Submit word" is clicked
     @FXML
     protected int submitWord() {
         if (mistakes > attemptsAllowed) {
@@ -136,10 +149,8 @@ public class InputController implements Initializable {
         }
         String guessedWord = inputText.getText();
         if (Objects.equals(guessedWord, wordGuess)) {
-            guessResult.setText("You win!");
             wordDisplay.setText(wordGuess);
-            inputText.clear();
-            makeResetButton();
+            winState();
             return 0;
         }
         guessResult.setText("That's not the word!");
