@@ -14,7 +14,7 @@ public class EntryPoint extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(EntryPoint.class.getResource("hangman-ui.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
-        stage.setTitle("Hangman");
+        stage.setTitle("Hangman!");
         stage.setScene(scene);
         stage.getIcons().add(
                 new Image(Objects.requireNonNull(EntryPoint.class.getResourceAsStream("Icon.png"))
