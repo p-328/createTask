@@ -9,15 +9,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class HelloApplication extends Application {
+public class EntryPoint extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hangman-ui.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(EntryPoint.class.getResource("hangman-ui.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
-        stage.setTitle("Hello!");
+        stage.setTitle("Hangman");
         stage.setScene(scene);
         stage.getIcons().add(
-                new Image(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("Icon.png"))
+                new Image(Objects.requireNonNull(EntryPoint.class.getResourceAsStream("Icon.png"))
         ));
         stage.show();
     }
